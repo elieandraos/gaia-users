@@ -1,0 +1,21 @@
+{
+    "name": "eandraos/gaia-users",
+    "description": "Users management module for the Gaia CMS",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Elie Andraos",
+            "email": "elie@andraos.org"
+        }
+    ],
+    "keywords": ["laravel 5", "gaia project", "backend users", "cms", "roles", "permissions"],
+    "minimum-stability": "stable",
+    "require": {
+        "eandraos/gaia-ui": "1.1.x",
+    },
+    "autoload": {
+        "psr-0": {
+            "Gaia\\Users": "src/"
+        }
+    }
+}
