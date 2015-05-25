@@ -1,5 +1,7 @@
 <?php
 
+Route::model('users', 'App\User');
+
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
 {
    Route::get('/users', ['as' => 'admin.users.list', 'uses' => 'Gaia\Users\UserController@index']);

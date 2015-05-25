@@ -28,8 +28,6 @@ class GaiaUsersServiceProvider extends ServiceProvider
         $this->publishes([ __DIR__ .'/../../Models' => base_path('app/Models/') ]);
         //publish PSR-4 Gaia folder
         $this->publishes([ __DIR__ .'/../../PSR4' => base_path('app/') ]);
-        //publish the updated user model
-        $this->publishes([ __DIR__ .'/../../User.php' => base_path('app/') ]);
         //include the routes
         include __DIR__.'/../../routes.php';
     }
