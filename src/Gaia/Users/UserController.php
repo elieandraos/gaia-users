@@ -9,11 +9,13 @@ use Gaia\Repositories\UserRepositoryInterface;
 use App\User;
 use Input;
 use Redirect;
+use Auth;
+use App;
 
 
 class UserController extends Controller {
 
-	protected $userRepos, $roles;
+	protected $userRepos, $roles, $authUser;
 
 	/**
 	 * Constructor: inject the user repository class to be used in all methods
@@ -23,6 +25,15 @@ class UserController extends Controller {
 	{
 		$this->userRepos   = $userReposInterface;
 		$this->roles = [ 'Editor' => 'Editor', 'Administrator' => 'Administrator', 'Superadmin' => 'Superadmin'];
+		//inject the authenticated user
+		$this->authUser = Auth::user(); 
+		//get the auth user rolename
+		$rolename = $this->authUser->getRole()->name;
+		$rolename = explode('-', $rolename);
+		$this->authUserRolename = $rolename[0];
+		
+		if($this->authUserRolename != 'superadmin')
+			App::abort(403, 'Access denied');
 	}
 
 
