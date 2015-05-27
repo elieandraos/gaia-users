@@ -34,13 +34,35 @@ Update the entrust.php file in config/ directory
 
 add the following method to the User model
 ```
-public function getRole()
-{
-	if($this->roles)
-		return $this->roles[0];
+	/**
+	 * Get the user role object
+	 * @return type
+	 */
+	public function getRole()
+	{
+		if($this->roles)
+			return $this->roles[0];
 
-	return null;
-}
+		return null;
+	}
+
+
+	/**
+	 * Checks if the use is('superadmin') or is('editor') or is('administrator')
+	 * @param type $rolename 
+	 * @return type
+	 */
+	public function is($rolename)
+	{
+		$r = $this->getRole()->name;
+		$r = explode('-', $r);
+		$r = ucwords($r[0]);
+
+		if($r == ucwords($rolename))
+			return true;
+
+		return false;
+	}
 ```
 
 #### Usage
