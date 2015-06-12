@@ -81,3 +81,6 @@ Create the seeds
 php artisan db:seed --class=RolesTableSeeder
 php artisan db:seed --class=PermissionTableSeeder
 ```
+
+
+Note: when adding a new permission in the seeds, update the getPermissionByRole() function in the repos to filter them.

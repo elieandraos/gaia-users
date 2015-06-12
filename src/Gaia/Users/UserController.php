@@ -11,7 +11,7 @@ use Input;
 use Redirect;
 use Auth;
 use App;
-
+use Flash;
 
 class UserController extends Controller {
 
@@ -69,6 +69,7 @@ class UserController extends Controller {
 	{
 		$input = $request->all();
 		$user = $this->userRepos->create($input); 
+		Flash::success('User was created successfully.');
 		return Redirect::route('admin.users.list');
 	}
 
@@ -98,6 +99,7 @@ class UserController extends Controller {
 	{
 		$input = $request->all();
 		$this->userRepos->update($user->id, $input);
+		Flash::success('User was updated successfully.');
 		return Redirect::route('admin.users.list');
 	}
 
