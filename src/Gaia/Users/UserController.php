@@ -3,15 +3,21 @@
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
+//Requests
 use Gaia\Users\UserRequest;
 use Gaia\Users\UserEditRequest;
+//Repositories
 use Gaia\Repositories\UserRepositoryInterface;
+use Gaia\Repositories\PostTypeRepositoryInterface;
+//Models
 use App\User;
+//Facades
 use Input;
 use Redirect;
 use Auth;
 use App;
 use Flash;
+use View;
 
 class UserController extends Controller {
 
@@ -21,12 +27,14 @@ class UserController extends Controller {
 	 * Constructor: inject the user repository class to be used in all methods
 	 * @return type
 	 */
-	public function __construct(UserRepositoryInterface $userReposInterface)
+	public function __construct(UserRepositoryInterface $userReposInterface, PostTypeRepositoryInterface $postTypeRepositoryInterface)
 	{
 		$this->userRepos   = $userReposInterface;
 		$this->roles = [ 'Editor' => 'Editor', 'Administrator' => 'Administrator', 'Superadmin' => 'Superadmin'];
+		
 		//inject the authenticated user
 		$this->authUser = Auth::user(); 
+		
 		//get the auth user rolename
 		$rolename = $this->authUser->getRole()->name;
 		$rolename = explode('-', $rolename);
@@ -34,6 +42,10 @@ class UserController extends Controller {
 		
 		if($this->authUserRolename != 'superadmin')
 			App::abort(403, 'Access denied');
+
+		//share the post type submenu to the layout
+		$this->postTypeRepos = $postTypeRepositoryInterface;
+		View::share('postTypesSubmenu', $this->postTypeRepos->renderMenu());
 	}
 
 
